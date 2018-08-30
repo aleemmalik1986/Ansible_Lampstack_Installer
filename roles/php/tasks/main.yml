@@ -1,0 +1,33 @@
+---
+- name: PHP | Install software-properties-common
+  package: name=software-properties-common state=present
+
+- name: PHP | Add PHP repo
+  apt_repository:
+          repo: ppa:ondrej/php
+          state: present
+
+- name: PHP | Update apt repo
+  apt:
+          update_cache: yes
+
+- name: PHP | Install PHP Packages
+  package: name={{ item }} state=present
+  with_items:
+          - php7.1 
+          - libapache2-mod-php7.1 
+          - php7.1-common 
+          - php7.1-mbstring 
+          - php7.1-xmlrpc 
+          - php7.1-gd 
+          - php7.1-xml 
+          - php7.1-mysql 
+          - php7.1-cli 
+          - php7.1-mcrypt 
+          - php7.1-zip 
+          - php7.1-curl
+
+- name: PHP | Configure php.ini
+  template:
+          src: "templates/php.ini"
+          dest: "/etc/php/7.1/apache2/php.ini"

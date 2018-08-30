@@ -1,0 +1,20 @@
+---
+#- name: WordPress | Create wordpress directory
+#  raw: "mkdir /var/www/html/wordpress -p"
+
+- name: Wordpress | Download and unarchive
+  unarchive:
+    src: https://wordpress.org/latest.tar.gz
+    dest: /var/www/html
+    remote_src: yes
+
+- name: WordPress | Creating main wordpress config file
+  template:
+          src: "templates/wp-config.php"
+          dest: "/var/www/html/wordpress/wp-config.php"
+
+- name: WordPress | Change wordpress ownership on directory
+  raw: "chown -R www-data:www-data /var/www/html/wordpress/"
+
+- name: WordPress | Chnage wordpress permissions on directory
+  raw: "chmod -R 755 /var/www/html/wordpress/"

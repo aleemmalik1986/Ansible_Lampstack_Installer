@@ -1,0 +1,5 @@
+#Database
+root_password: "redhat"
+wp_database: "wpdb"
+wp_db_user: "wpdbuser"
+wp_db_user_password: "wpdbpass"

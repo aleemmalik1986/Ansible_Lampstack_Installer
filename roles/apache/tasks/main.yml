@@ -1,0 +1,20 @@
+---
+- name: APACHE | Install util packages
+  package: name={{ item }} state=present
+  with_items:
+    - python-apt
+
+- name: APACHE | Install apache2
+  package: name=apache2 state=present
+
+- name: APACHE | Move wordpress.conf from templates
+  template:
+          src: "templates/wordpress.conf"
+          dest: "/etc/apache2/sites-available/wordpress.conf"
+- name: APACHE | Enable wordpress site
+  raw: "a2ensite wordpress.conf"
+
+- name: APACHE | Enable apache rewrite mode
+  raw: "a2enmod rewrite"
+  notify:
+      - restart apache2
